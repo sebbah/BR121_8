@@ -31,11 +31,39 @@ namespace Akhn_8
                 CzyscWyjscie();
             }
 
+            // parametry uzytkownika
+            string dysza = textBox5.Text;
+            string procedura = textBox11.Text;
+            string status = textBox6.Text;
+            string odnr = textBox3.Text;
+            string donr = textBox4.Text;
+            int ok = 0;
+
+            if (odnr.Length != 8)
+            {
+                richTextBox1.Text += "Sprawdź nr seryjny OD!\n";
+                ok++;
+            }
+
+            if (donr.Length != 8)
+            {
+                richTextBox1.Text += "Sprawdź nr seryjny DO!\n";
+                ok++;
+            }
+
+            if (odnr[0] != donr[0] || odnr[1] != donr[1])
+            {
+                richTextBox1.Text += "Sprawdź czy numery seryjne są w jednej grupie!\n";
+                ok++;
+            }
+
             if (!System.IO.File.Exists(nazwaPlikuWejsciowego))
             {
                 richTextBox1.Text += "Brak dostępu do pliku!\n";
+                ok++;
             }
-            else
+
+            if (ok==0)
             {
                 int k1 = 0;
                 int k1p = 0;
@@ -86,13 +114,6 @@ namespace Akhn_8
                 char znak2 = '\''; // char 39 - znak ktory pomijamy '
 
                 string nozzle, windex, serial, concl, testname; // dane otrzymane po analizie linii
-
-                // parametry uzytkownika
-                string dysza = textBox5.Text;
-                string procedura = textBox11.Text;
-                string status = textBox6.Text;
-                string odnr = textBox3.Text;
-                string donr = textBox4.Text;
 
                 // Read the file it line by line.  
                 System.IO.StreamReader file =
@@ -256,15 +277,10 @@ namespace Akhn_8
                 suma = suma + k21 + k21p + k22 + k22p;
                 richTextBox1.Text += "SUMA:\t" + suma.ToString() + "\n";
             }
-            
-            //System.Console.WriteLine("There were {0} lines.", counter);
-            // Suspend the screen.  
-            //System.Console.ReadLine();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
+            else
+            {
+                richTextBox1.Text += "Błędy :  " + ok.ToString() + "\n";
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
