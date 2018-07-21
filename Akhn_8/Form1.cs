@@ -38,6 +38,7 @@ namespace Akhn_8
             string odnr = textBox3.Text;
             string donr = textBox4.Text;
             int ok = 0;
+            bool czyZliczac = true;
 
             if (odnr.Length != 8)
             {
@@ -130,6 +131,8 @@ namespace Akhn_8
                     concl = "";
                     testname = "";
 
+                    if (linia == "/*!40000 ALTER TABLE `results` ENABLE KEYS */;") czyZliczac = false;
+
                     for (int i = 0; i <= linia.Length - 1; i++)
                     {
                         if (linia[i] == znak) rekord++;
@@ -142,7 +145,7 @@ namespace Akhn_8
                         if (rekord == 29) if (linia[i] != znak && linia[i] != znak2) testname = testname + linia[i]; // Test_name
                     }
 
-                    if (concl == status && testname == procedura && nozzle == dysza)
+                    if (czyZliczac==true && concl == status && testname == procedura && nozzle == dysza)
                         if (Int32.Parse(serial) >= Int32.Parse(odnr) && Int32.Parse(serial) <= Int32.Parse(donr))
                         {
                             if (windex == "1")
@@ -230,45 +233,45 @@ namespace Akhn_8
                 file.Close();
 
                 richTextBox1.Text += "GEAR\tPCS" + "\n";
-                richTextBox1.Text += "1,0\t" + k1.ToString() + "\n";
-                richTextBox1.Text += "1,5\t" + k1p.ToString() + "\n";
-                richTextBox1.Text += "2,0\t" + k2.ToString() + "\n";
-                richTextBox1.Text += "2,5\t" + k2p.ToString() + "\n";
-                richTextBox1.Text += "3,0\t" + k3.ToString() + "\n";
-                richTextBox1.Text += "3,5\t" + k3p.ToString() + "\n";
-                richTextBox1.Text += "4,0\t" + k4.ToString() + "\n";
-                richTextBox1.Text += "4,5\t" + k4p.ToString() + "\n";
-                richTextBox1.Text += "5,0\t" + k5.ToString() + "\n";
-                richTextBox1.Text += "5,5\t" + k5p.ToString() + "\n";
-                richTextBox1.Text += "6,0\t" + k6.ToString() + "\n";
-                richTextBox1.Text += "6,5\t" + k6p.ToString() + "\n";
-                richTextBox1.Text += "7,0\t" + k7.ToString() + "\n";
-                richTextBox1.Text += "7,5\t" + k7p.ToString() + "\n";
-                richTextBox1.Text += "8,0\t" + k8.ToString() + "\n";
-                richTextBox1.Text += "8,5\t" + k8p.ToString() + "\n";
-                richTextBox1.Text += "9,0\t" + k9.ToString() + "\n";
-                richTextBox1.Text += "10,0\t" + k10.ToString() + "\n";
-                richTextBox1.Text += "10,5\t" + k10p.ToString() + "\n";
-                richTextBox1.Text += "13,0\t" + k13.ToString() + "\n";
-                richTextBox1.Text += "13,5\t" + k13p.ToString() + "\n";
-                richTextBox1.Text += "14,0\t" + k14.ToString() + "\n";
-                richTextBox1.Text += "14,5\t" + k14p.ToString() + "\n";
-                richTextBox1.Text += "15,0\t" + k15.ToString() + "\n";
-                richTextBox1.Text += "15,5\t" + k15p.ToString() + "\n";
-                richTextBox1.Text += "16,0\t" + k16.ToString() + "\n";
-                richTextBox1.Text += "16,5\t" + k16p.ToString() + "\n";
-                richTextBox1.Text += "17,0\t" + k17.ToString() + "\n";
-                richTextBox1.Text += "17,5\t" + k17p.ToString() + "\n";
-                richTextBox1.Text += "18,0\t" + k18.ToString() + "\n";
-                richTextBox1.Text += "18,5\t" + k18p.ToString() + "\n";
-                richTextBox1.Text += "19,0\t" + k19.ToString() + "\n";
-                richTextBox1.Text += "19,5\t" + k19p.ToString() + "\n";
-                richTextBox1.Text += "20,0\t" + k20.ToString() + "\n";
-                richTextBox1.Text += "20,5\t" + k20p.ToString() + "\n";
-                richTextBox1.Text += "21,0\t" + k21.ToString() + "\n";
-                richTextBox1.Text += "21,5\t" + k21p.ToString() + "\n";
-                richTextBox1.Text += "22,0\t" + k22.ToString() + "\n";
-                richTextBox1.Text += "22,5\t" + k22p.ToString() + "\n";
+                if ((k1==0 && checkBox2.Checked) || k1>0) richTextBox1.Text += "1,0\t" + k1.ToString() + "\n";
+                if ((k1p == 0 && checkBox2.Checked) || k1p > 0) richTextBox1.Text += "1,5\t" + k1p.ToString() + "\n";
+                if ((k2 == 0 && checkBox2.Checked) || k2 > 0) richTextBox1.Text += "2,0\t" + k2.ToString() + "\n";
+                if ((k2p == 0 && checkBox2.Checked) || k2p > 0) richTextBox1.Text += "2,5\t" + k2p.ToString() + "\n";
+                if ((k3 == 0 && checkBox2.Checked) || k3 > 0) richTextBox1.Text += "3,0\t" + k3.ToString() + "\n";
+                if ((k3p == 0 && checkBox2.Checked) || k3p > 0) richTextBox1.Text += "3,5\t" + k3p.ToString() + "\n";
+                if ((k4 == 0 && checkBox2.Checked) || k4 > 0) richTextBox1.Text += "4,0\t" + k4.ToString() + "\n";
+                if ((k4p == 0 && checkBox2.Checked) || k4p > 0) richTextBox1.Text += "4,5\t" + k4p.ToString() + "\n";
+                if ((k5 == 0 && checkBox2.Checked) || k5 > 0) richTextBox1.Text += "5,0\t" + k5.ToString() + "\n";
+                if ((k5p == 0 && checkBox2.Checked) || k5p > 0) richTextBox1.Text += "5,5\t" + k5p.ToString() + "\n";
+                if ((k6 == 0 && checkBox2.Checked) || k6 > 0) richTextBox1.Text += "6,0\t" + k6.ToString() + "\n";
+                if ((k6p == 0 && checkBox2.Checked) || k6p > 0) richTextBox1.Text += "6,5\t" + k6p.ToString() + "\n";
+                if ((k7 == 0 && checkBox2.Checked) || k7 > 0) richTextBox1.Text += "7,0\t" + k7.ToString() + "\n";
+                if ((k7p == 0 && checkBox2.Checked) || k7p > 0) richTextBox1.Text += "7,5\t" + k7p.ToString() + "\n";
+                if ((k8 == 0 && checkBox2.Checked) || k8 > 0) richTextBox1.Text += "8,0\t" + k8.ToString() + "\n";
+                if ((k8p == 0 && checkBox2.Checked) || k8p > 0) richTextBox1.Text += "8,5\t" + k8p.ToString() + "\n";
+                if ((k9 == 0 && checkBox2.Checked) || k9 > 0) richTextBox1.Text += "9,0\t" + k9.ToString() + "\n";
+                if ((k10 == 0 && checkBox2.Checked) || k10 > 0) richTextBox1.Text += "10,0\t" + k10.ToString() + "\n";
+                if ((k10p == 0 && checkBox2.Checked) || k10p > 0) richTextBox1.Text += "10,5\t" + k10p.ToString() + "\n";
+                if ((k13 == 0 && checkBox2.Checked) || k13 > 0) richTextBox1.Text += "13,0\t" + k13.ToString() + "\n";
+                if ((k13p == 0 && checkBox2.Checked) || k13p > 0) richTextBox1.Text += "13,5\t" + k13p.ToString() + "\n";
+                if ((k14 == 0 && checkBox2.Checked) || k14 > 0) richTextBox1.Text += "14,0\t" + k14.ToString() + "\n";
+                if ((k14p == 0 && checkBox2.Checked) || k14p > 0) richTextBox1.Text += "14,5\t" + k14p.ToString() + "\n";
+                if ((k15 == 0 && checkBox2.Checked) || k15 > 0) richTextBox1.Text += "15,0\t" + k15.ToString() + "\n";
+                if ((k15p == 0 && checkBox2.Checked) || k15p > 0) richTextBox1.Text += "15,5\t" + k15p.ToString() + "\n";
+                if ((k16 == 0 && checkBox2.Checked) || k16 > 0) richTextBox1.Text += "16,0\t" + k16.ToString() + "\n";
+                if ((k16p == 0 && checkBox2.Checked) || k16p > 0) richTextBox1.Text += "16,5\t" + k16p.ToString() + "\n";
+                if ((k17 == 0 && checkBox2.Checked) || k17 > 0) richTextBox1.Text += "17,0\t" + k17.ToString() + "\n";
+                if ((k17p == 0 && checkBox2.Checked) || k17p > 0) richTextBox1.Text += "17,5\t" + k17p.ToString() + "\n";
+                if ((k18 == 0 && checkBox2.Checked) || k18 > 0) richTextBox1.Text += "18,0\t" + k18.ToString() + "\n";
+                if ((k18p == 0 && checkBox2.Checked) || k18p > 0) richTextBox1.Text += "18,5\t" + k18p.ToString() + "\n";
+                if ((k19 == 0 && checkBox2.Checked) || k19 > 0) richTextBox1.Text += "19,0\t" + k19.ToString() + "\n";
+                if ((k19p == 0 && checkBox2.Checked) || k19p > 0) richTextBox1.Text += "19,5\t" + k19p.ToString() + "\n";
+                if ((k20 == 0 && checkBox2.Checked) || k20 > 0) richTextBox1.Text += "20,0\t" + k20.ToString() + "\n";
+                if ((k20p == 0 && checkBox2.Checked) || k20p > 0) richTextBox1.Text += "20,5\t" + k20p.ToString() + "\n";
+                if ((k21 == 0 && checkBox2.Checked) || k21 > 0) richTextBox1.Text += "21,0\t" + k21.ToString() + "\n";
+                if ((k21p == 0 && checkBox2.Checked) || k21p > 0) richTextBox1.Text += "21,5\t" + k21p.ToString() + "\n";
+                if ((k22 == 0 && checkBox2.Checked) || k22 > 0) richTextBox1.Text += "22,0\t" + k22.ToString() + "\n";
+                if ((k22p == 0 && checkBox2.Checked) || k22p > 0) richTextBox1.Text += "22,5\t" + k22p.ToString() + "\n";
 
                 suma = k1 + k1p + k2 + k2p + k3 + k3p + k4 + k4p;
                 suma = suma + k5 + k5p + k6 + k6p + k7 + k7p;
