@@ -24,12 +24,16 @@ namespace Akhn_8
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string nazwaPlikuWejsciowego = textBox1.Text;
-
             if (checkBox1.Checked)
             {
                 CzyscWyjscie();
+                textBox8.Text = "";  // ?
             }
+
+            //richTextBox1.Text += "Proszę czekać, to chwilę potrwa ...\n\n";
+            
+            string nazwaPlikuWejsciowego = textBox1.Text;
+
 
             // parametry uzytkownika
             string dysza = textBox5.Text;
@@ -38,15 +42,21 @@ namespace Akhn_8
             string odnr = textBox3.Text;
             string donr = textBox4.Text;
             int ok = 0;
-            bool czyZliczac = true;
+            int serialInt, odnrInt, donrInt;
 
-            if (odnr.Length != 8)
+
+            bool czyZliczac = true; // na false po zakończeniu tabeli results
+            bool czyZliczacTymRazem = true;
+
+            czyZliczacTymRazem = Int32.TryParse(odnr, out odnrInt);
+            if (odnr.Length != 8 || czyZliczacTymRazem==false)
             {
                 richTextBox1.Text += "Sprawdź nr seryjny OD!\n";
                 ok++;
             }
 
-            if (donr.Length != 8)
+            czyZliczacTymRazem = Int32.TryParse(donr, out donrInt);
+            if (donr.Length != 8 || czyZliczacTymRazem == false)
             {
                 richTextBox1.Text += "Sprawdź nr seryjny DO!\n";
                 ok++;
@@ -55,6 +65,12 @@ namespace Akhn_8
             if (odnr[0] != donr[0] || odnr[1] != donr[1])
             {
                 richTextBox1.Text += "Sprawdź czy numery seryjne są w jednej grupie!\n";
+                ok++;
+            }
+
+            if (odnrInt > donrInt)
+            {
+                richTextBox1.Text += "Sprawdź numery seryjne (numer OD > numeru DO)!\n";
                 ok++;
             }
 
@@ -116,6 +132,7 @@ namespace Akhn_8
 
                 string nozzle, windex, serial, concl, testname; // dane otrzymane po analizie linii
 
+
                 // Read the file it line by line.  
                 System.IO.StreamReader file =
                     new System.IO.StreamReader(@nazwaPlikuWejsciowego);
@@ -145,8 +162,11 @@ namespace Akhn_8
                         if (rekord == 29) if (linia[i] != znak && linia[i] != znak2) testname = testname + linia[i]; // Test_name
                     }
 
-                    if (czyZliczac==true && concl == status && testname == procedura && nozzle == dysza)
-                        if (Int32.Parse(serial) >= Int32.Parse(odnr) && Int32.Parse(serial) <= Int32.Parse(donr))
+                    // spr czy serial jest poprawny
+                    czyZliczacTymRazem = Int32.TryParse(serial, out serialInt);
+
+                    if (czyZliczac==true && czyZliczacTymRazem == true && concl == status && testname == procedura && nozzle == dysza)
+                        if (serialInt >= odnrInt && serialInt <= donrInt)
                         {
                             if (windex == "1")
                                 k1++;
