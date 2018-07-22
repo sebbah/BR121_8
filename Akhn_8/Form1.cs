@@ -38,6 +38,7 @@ namespace Akhn_8
         {
             richTextBox1.Text = "";
         }
+        //void CzyscWyjscie() => richTextBox1.Text = "";
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -191,6 +192,7 @@ namespace Akhn_8
                     }
                 }
                 richTextBox1.Text += "SUMA:\t" + suma.ToString() + "\n";
+                textBox8.Text = counter.ToString();
             }
             else
             {
@@ -200,6 +202,7 @@ namespace Akhn_8
 
         private void button2_Click(object sender, EventArgs e)
         {
+            textBox8.Text = "";
             CzyscWyjscie();
         }
     }
