@@ -273,7 +273,7 @@
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.textBox11);
             this.Name = "Form1";
-            this.Text = "Akhn v. 8.0";
+            this.Text = Constants.NAZWA_APL; //"Akhn v. 8.0";
             this.ResumeLayout(false);
             this.PerformLayout();
 
