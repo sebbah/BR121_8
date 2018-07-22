@@ -185,7 +185,7 @@ namespace Akhn_8
                 {
                     if (nowy.sumPos > 0 || checkBox2.Checked)
                     {
-                        richTextBox1.Text += "1,0\t" + nowy.sumPos.ToString() + "\n";
+                        richTextBox1.Text += nowy.namePos + "\t" + nowy.sumPos.ToString() + "\n";
                         suma += nowy.sumPos;
                         // suma = k1 + k1p + k2 + k2p + k3 + k3p + k4 + k4p;
                     }
