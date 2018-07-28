@@ -10,23 +10,6 @@ using System.Windows.Forms;
 
 namespace Akhn_8
 {
-    static class Constants
-    {
-        public const string NAZWA_APL = "Akhn 8.1 build 0203";
-    }
-    
-    public class GearTable
-    {
-        public string namePos { get; set; }
-        public int sumPos { get; set; }
-
-        public GearTable(string snamePos, int nsumPos)
-        {
-            namePos = snamePos;
-            sumPos = nsumPos;
-        }
-    }
-    
     public partial class Form1 : Form
     {
         public Form1()
@@ -34,34 +17,47 @@ namespace Akhn_8
             InitializeComponent();
         }
 
-        void CzyscWyjscie()
+        static class Constants
         {
-            richTextBox1.Text = "";
+            public const string NAZWA_APL = "Akhn 8.1 build 0300";
         }
-        //void CzyscWyjscie() => richTextBox1.Text = "";
+
+        public class GearTable
+        {
+            public string namePos { get; set; }
+            public int sumPos { get; set; }
+
+            public GearTable(string snamePos, int nsumPos)
+            {
+                namePos = snamePos;
+                sumPos = nsumPos;
+            }
+        }
+        
+        void CzyscWyjscie() => richTextBox1.Text = "";
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
             {
                 CzyscWyjscie();
-                // textBox8.Text = "";  // ?
+                //TODO: textBox8.Text = "";
             }
 
-            //richTextBox1.Text += "Proszę czekać, to chwilę potrwa ...\n\n";
+            //TODO: richTextBox1.Text += "Proszę czekać, to chwilę potrwa ...\n\n";
 
             List<GearTable> nGear = new List<GearTable>();
             // nGear.Add(new GearTable("1", 0));
             // nGear.Add(new GearTable("1.5", 0));
 
-            int ok = 0;
+            int iloscBledow = 0;
             string linia;
             string nazwaPlikuConfig = "geartype.txt";
-            
+
             if (!System.IO.File.Exists(nazwaPlikuConfig))
             {
                 richTextBox1.Text += "Brak dostępu do pliku " + nazwaPlikuConfig + " !\n";
-                ok++;
+                iloscBledow++;
             }
             else
             {
@@ -74,7 +70,7 @@ namespace Akhn_8
                 file.Close();
             }
 
-            richTextBox1.Text += "Pozycji : " + nGear.Count + "\n"; // ile
+            richTextBox1.Text += "Załadowano " + nGear.Count + " pozycji do wyszukiwania.\n"; // ile typów kol jest szukanych.
 
             // parametry uzytkownika
             string nazwaPlikuWejsciowego = textBox1.Text;
@@ -86,48 +82,48 @@ namespace Akhn_8
 
             int serialInt, odnrInt, donrInt;
 
-            bool czyZliczac = true; // na false po zakończeniu tabeli results (unikam zliczania z tresults)
+            bool czyZliczac = true; // zostaje przestawione na false po zakończeniu tabeli results (unikam zliczania z tresults)
             bool czyZliczacTymRazem = true;
 
             if (nGear.Count == 0)
             {
-                richTextBox1.Text += "Brak danych dot. szukanych kół w pliku " + nazwaPlikuConfig +"\n";
-                ok++;
+                richTextBox1.Text += "Brak danych dot. szukanych kół w pliku " + nazwaPlikuConfig + "\n";
+                iloscBledow++;
             }
 
             czyZliczacTymRazem = Int32.TryParse(odnr, out odnrInt);
-            if (odnr.Length != 8 || czyZliczacTymRazem==false)
+            if (odnr.Length != 8 || czyZliczacTymRazem == false)
             {
                 richTextBox1.Text += "Sprawdź nr seryjny OD!\n";
-                ok++;
+                iloscBledow++;
             }
 
             czyZliczacTymRazem = Int32.TryParse(donr, out donrInt);
             if (donr.Length != 8 || czyZliczacTymRazem == false)
             {
                 richTextBox1.Text += "Sprawdź nr seryjny DO!\n";
-                ok++;
+                iloscBledow++;
             }
 
             if (odnr[0] != donr[0] || odnr[1] != donr[1])
             {
                 richTextBox1.Text += "Sprawdź czy numery seryjne są w jednej grupie!\n";
-                ok++;
+                iloscBledow++;
             }
 
             if (odnrInt > donrInt)
             {
                 richTextBox1.Text += "Sprawdź numery seryjne (numer OD > numeru DO)!\n";
-                ok++;
+                iloscBledow++;
             }
 
             if (!System.IO.File.Exists(nazwaPlikuWejsciowego))
             {
                 richTextBox1.Text += "Brak dostępu do pliku " + nazwaPlikuWejsciowego + "!\n";
-                ok++;
+                iloscBledow++;
             }
 
-            if (ok==0)
+            if (iloscBledow == 0)
             {
                 int suma = 0;
                 int counter = 0;
@@ -135,13 +131,13 @@ namespace Akhn_8
                 char znak = ','; // znak rozdzielajacy dane
                 char znak2 = '\''; // char 39 - znak ktory pomijamy '
                 string nozzle, windex, serial, concl, testname; // dane otrzymane po analizie linii
-                
+
                 // Read the file it line by line.  
                 System.IO.StreamReader file = new System.IO.StreamReader(@nazwaPlikuWejsciowego);
                 while ((linia = file.ReadLine()) != null)
                 {
                     counter++;
-                    // textBox8.Text = counter.ToString(); // ? nie odswieza?
+                    //TODO: textBox8.Text = counter.ToString();
                     rekord = 1;
                     nozzle = "";
                     windex = "";
@@ -163,7 +159,7 @@ namespace Akhn_8
                     // spr czy serial jest poprawny
                     czyZliczacTymRazem = Int32.TryParse(serial, out serialInt);
 
-                    if (czyZliczac==true && czyZliczacTymRazem == true && concl == status && testname == procedura && nozzle == dysza)
+                    if (czyZliczac == true && czyZliczacTymRazem == true && concl == status && testname == procedura && nozzle == dysza)
                         if (serialInt >= odnrInt && serialInt <= donrInt)
                         {
                             //if (windex == "1") k1++;
@@ -188,7 +184,7 @@ namespace Akhn_8
                     {
                         richTextBox1.Text += nowy.namePos + "\t" + nowy.sumPos.ToString() + "\n";
                         suma += nowy.sumPos;
-                        // suma = k1 + k1p + k2 + k2p + k3 + k3p + k4 + k4p;
+                        // suma = k1 + k1p + k2 + ...;
                     }
                 }
                 richTextBox1.Text += "SUMA:\t" + suma.ToString() + "\n";
@@ -196,7 +192,7 @@ namespace Akhn_8
             }
             else
             {
-                richTextBox1.Text += "Błędy :  " + ok.ToString() + "\n";
+                richTextBox1.Text += "Błędy :  " + iloscBledow.ToString() + "\n";
             }
         }
 
