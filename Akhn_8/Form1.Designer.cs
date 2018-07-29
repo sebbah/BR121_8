@@ -188,9 +188,9 @@
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Location = new System.Drawing.Point(244, 130);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(69, 17);
+            this.checkBox1.Size = new System.Drawing.Size(140, 17);
             this.checkBox1.TabIndex = 56;
-            this.checkBox1.Text = "Wyczyść";
+            this.checkBox1.Text = "Wyczyść automatycznie";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -272,7 +272,7 @@
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.textBox11);
             this.Name = "Form1";
-            this.Text = Constants.NAZWA_APL; //"Akhn_8";
+            this.Text = Declarations.NAZWA_APL; //"Akhn 8.1";
             this.ResumeLayout(false);
             this.PerformLayout();
 

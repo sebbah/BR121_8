@@ -16,26 +16,7 @@ namespace Akhn_8
         {
             InitializeComponent();
         }
-
-        static class Constants
-        {
-            public const string NAZWA_APL = "Akhn 8.1 build 0300";
-        }
-
-        public class GearTable
-        {
-            public string namePos { get; set; }
-            public int sumPos { get; set; }
-
-            public GearTable(string snamePos, int nsumPos)
-            {
-                namePos = snamePos;
-                sumPos = nsumPos;
-            }
-        }
-        
-        void CzyscWyjscie() => richTextBox1.Text = "";
-
+                
         private void button1_Click(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -73,12 +54,13 @@ namespace Akhn_8
             richTextBox1.Text += "Załadowano " + nGear.Count + " pozycji do wyszukiwania.\n"; // ile typów kol jest szukanych.
 
             // parametry uzytkownika
-            string nazwaPlikuWejsciowego = textBox1.Text;
-            string dysza = textBox5.Text;
-            string procedura = textBox11.Text;
-            string status = textBox6.Text;
-            string odnr = textBox3.Text;
-            string donr = textBox4.Text;
+            string nazwaPlikuWejsciowego, dysza, procedura, status, odnr, donr;
+            nazwaPlikuWejsciowego = textBox1.Text;
+            dysza = textBox5.Text;
+            procedura = textBox11.Text;
+            status = textBox6.Text;
+            odnr = textBox3.Text;
+            donr = textBox4.Text;
 
             int serialInt, odnrInt, donrInt;
 
@@ -136,6 +118,7 @@ namespace Akhn_8
                 System.IO.StreamReader file = new System.IO.StreamReader(@nazwaPlikuWejsciowego);
                 while ((linia = file.ReadLine()) != null)
                 {
+
                     counter++;
                     //TODO: textBox8.Text = counter.ToString();
                     rekord = 1;
@@ -145,7 +128,7 @@ namespace Akhn_8
                     concl = "";
                     testname = "";
 
-                    if (linia == "/*!40000 ALTER TABLE `results` ENABLE KEYS */;") czyZliczac = false;
+                    if (linia == Declarations.KONIEC_DANYCH) czyZliczac = false;
                     for (int i = 0; i <= linia.Length - 1; i++)
                     {
                         if (linia[i] == znak) rekord++;
@@ -196,6 +179,8 @@ namespace Akhn_8
             }
         }
 
+        private void CzyscWyjscie() => richTextBox1.Text = "";
+        
         private void button2_Click(object sender, EventArgs e)
         {
             textBox8.Text = "";
